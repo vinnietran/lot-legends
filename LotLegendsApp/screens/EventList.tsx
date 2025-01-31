@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, Button} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import { format } from 'date-fns';
@@ -35,7 +35,7 @@ if (firebase.apps.length === 0) {
   console.log('Firebase manually initialized.');
 }
 
-function EventList(): React.JSX.Element {
+function EventList({ navigation }: any): React.JSX.Element {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -61,6 +61,10 @@ function EventList(): React.JSX.Element {
 
   return (
     <View style={styles.container}>
+    <Button
+        title="Create New Event"
+        onPress={() => navigation.navigate('CreateEvent')}
+      />
       <FlatList
         data={events}
         keyExtractor={item => item.id}
