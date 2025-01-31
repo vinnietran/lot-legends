@@ -1,8 +1,20 @@
 import React from 'react';
-import EventList from './screens/EventList';  // Adjust path if needed
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import EventList from './screens/EventList';
+import CreateEvent from './screens/CreateEvent';
+
+const Stack = createStackNavigator();
 
 function App(): React.JSX.Element {
-  return <EventList />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="EventList" component={EventList} options={{ title: 'Tailgate Events' }} />
+        <Stack.Screen name="CreateEvent" component={CreateEvent} options={{ title: 'Create New Event' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 export default App;
