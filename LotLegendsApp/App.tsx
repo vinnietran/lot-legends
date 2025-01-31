@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -25,11 +18,36 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+// Import Firebase App
+import firebase from '@react-native-firebase/app';
+
+console.log('Firebase SDK Version:', firebase.SDK_VERSION);
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCa2REIrFZBsibn5UGrajmoU70gJ1fmmJQ",
+  appId: "1:49801702948:ios:a2ae314bf50cdbd85232b1",
+  messagingSenderId: "49801702948",
+  projectId: "lot-legends",
+  storageBucket: "lot-legends.firebasestorage.app",
+  databaseURL: "",  // Leave empty if you don't have Realtime Database set up
+};
+
+// Initialize Firebase manually if no apps exist
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+  console.log('Firebase manually initialized.');
+}
+
+
+
+
 function Section({children, title}: SectionProps): React.JSX.Element {
+
+
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -58,6 +76,10 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  // Simple test to check if Firebase is initialized
+  const firebaseStatus = firebase.apps.length > 0 ? 'Firebase is ready!' : 'Firebase failed to initialize.';
+  console.log(firebase);
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -76,9 +98,12 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <Section title="Firebase Status">
+            {firebaseStatus}
+          </Section>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and CENZO TRANQUILLO then me back to see your edits.
+            screen and see your edits.
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
